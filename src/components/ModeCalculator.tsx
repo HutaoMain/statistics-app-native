@@ -25,11 +25,11 @@ const ModeCalculator = ({ data }: ModeCalculatorProps) => {
 
   return (
     <View>
-      <Text style={styles.resultContainer}>
-        Mode:{" "}
-        {isNaN(Number(modes.join(", ")))
-          ? "Please enter the data in Input box to compute mode."
-          : modes.join(", ")}
+      <Text style={styles.resultContainer}>Mode: {modes.join(", ")}</Text>
+      <Text style={styles.definition}>
+        The Mode is the value(s) that appear most frequently in the dataset. To
+        compute it, count the frequency of each value in the dataset, and
+        identify the value(s) with the highest frequency.
       </Text>
     </View>
   );
@@ -40,5 +40,11 @@ export default ModeCalculator;
 const styles = StyleSheet.create({
   resultContainer: {
     width: "70%",
+  },
+  definition: {
+    width: "70%",
+    marginTop: 10,
+    fontStyle: "italic",
+    color: "gray",
   },
 });

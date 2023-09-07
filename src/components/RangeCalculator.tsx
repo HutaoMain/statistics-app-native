@@ -18,6 +18,11 @@ const RangeCalculator = ({ data }: RangeCalculatorProps) => {
           ? "Please enter the data in Input box to compute range."
           : range}
       </Text>
+      <Text style={styles.definition}>
+        The Range is the difference between the maximum and minimum values in
+        the dataset. To compute it, find the largest and smallest values in the
+        dataset and subtract the smallest from the largest.
+      </Text>
     </View>
   );
 };
@@ -27,5 +32,11 @@ export default RangeCalculator;
 const styles = StyleSheet.create({
   resultContainer: {
     width: "70%",
+  },
+  definition: {
+    width: "70%",
+    marginTop: 10,
+    fontStyle: "italic",
+    color: "gray",
   },
 });

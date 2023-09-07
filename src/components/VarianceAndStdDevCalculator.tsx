@@ -15,6 +15,8 @@ const VarianceAndStdDevCalculator = ({
     data.length;
   const stdDev = Math.sqrt(variance);
 
+  // const roundedVariance = Math.round(variance);
+
   return (
     <View style={styles.varianceNStdContainer}>
       <Text style={styles.resultContainer}>
@@ -29,6 +31,19 @@ const VarianceAndStdDevCalculator = ({
           ? "Please enter the data in Input box to compute standard deviation."
           : stdDev}
       </Text>
+      <View style={styles.definition}>
+        <Text style={styles.title}>Variance:</Text>
+        <Text style={styles.definition}>
+          a measure of how data points in a dataset differ from the mean. To
+          compute it, subtract the mean from each data point, square the result,
+          and then find the average of these squared differences.
+        </Text>
+        <Text style={styles.title}>Standard Deviation:</Text>
+        <Text style={styles.definition}>
+          the square root of the variance and represents the average distance of
+          the data points from the mean.
+        </Text>
+      </View>
     </View>
   );
 };
@@ -41,5 +56,18 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     width: "70%",
+  },
+  definition: {
+    width: "70%",
+    marginTop: 10,
+    fontStyle: "italic",
+    color: "gray",
+  },
+  title: {
+    width: "70%",
+    marginTop: 10,
+    fontStyle: "italic",
+    color: "gray",
+    fontWeight: "bold",
   },
 });
