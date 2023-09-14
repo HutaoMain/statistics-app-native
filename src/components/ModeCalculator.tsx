@@ -25,7 +25,9 @@ const ModeCalculator = ({ data }: ModeCalculatorProps) => {
 
   return (
     <View>
-      <Text style={styles.resultContainer}>Mode: {modes.join(", ")}</Text>
+      <Text style={styles.resultContainer}>
+        Mode: {maxFrequency === 1 ? "No Mode" : modes.join(", ")}
+      </Text>
       <Text style={styles.definition}>
         The Mode is the value(s) that appear most frequently in the dataset. To
         compute it, count the frequency of each value in the dataset, and
