@@ -80,7 +80,7 @@ const Home = () => {
           </Text>
           <TextInput
             multiline={true}
-            numberOfLines={18}
+            numberOfLines={10}
             mode="outlined"
             label="Data"
             placeholder="Enter data separated by commas"
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     width: "100%",
-    gap: 20,
-    paddingTop: 40,
+    gap: 10,
+    paddingTop: 10,
   },
   textInput: {
     width: "70%",
