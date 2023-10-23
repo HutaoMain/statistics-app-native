@@ -73,7 +73,14 @@ const Home = () => {
           </View>
         </View>
         <View style={styles.resultContainer}>
+          <Text
+            style={{ margin: 0, padding: 0, width: "70%", flexWrap: "wrap" }}
+          >
+            Enter data separated by commas in the space provided:
+          </Text>
           <TextInput
+            multiline={true}
+            numberOfLines={18}
             mode="outlined"
             label="Data"
             placeholder="Enter data separated by commas"

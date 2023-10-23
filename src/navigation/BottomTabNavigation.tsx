@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Home from "../screens/Home";
-import History from "../screens/History";
 
 const BottomTabNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -38,11 +37,6 @@ const BottomTabNavigation = () => {
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="History"
-        component={History}
         options={{ headerShown: false }}
       />
     </Tab.Navigator>
