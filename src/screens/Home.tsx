@@ -1,103 +1,102 @@
-import { SafeAreaView, View, StyleSheet, Text } from "react-native";
-import React from "react";
+import React, { useRef, useState } from "react";
+import {
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Text,
+  DrawerLayoutAndroid,
+  TouchableOpacity,
+} from "react-native";
 import Navbar from "../components/Navbar";
-import { useState } from "react";
 import ToggleButtonReusable from "../components/ToggleButtonReusable";
 import MeanCalculator from "../components/MeanCalculator";
 import MedianCalculator from "../components/MedianCalculator";
 import ModeCalculator from "../components/ModeCalculator";
 import RangeCalculator from "../components/RangeCalculator";
 import VarianceAndStdDevCalculator from "../components/VarianceAndStdDevCalculator";
-import { TextInput } from "react-native-paper";
+import NumberInput from "../components/NumberInput";
+import { useNavigation } from "@react-navigation/native";
+import { HomeNavigationProps } from "../Types";
+
+const buttons = [
+  { label: "Mean", value: "mean" },
+  { label: "Median", value: "median" },
+  { label: "Mode", value: "mode" },
+  { label: "Range", value: "range" },
+  { label: "Variance", value: "variance" },
+];
 
 const Home = () => {
-  const [selectedStat, setSelectedStat] = useState<string | null>(null);
-  const [inputData, setInputData] = useState<string>("");
+  const drawerRef = useRef<DrawerLayoutAndroid>(null);
+
+  const [selectedStat, setSelectedStat] = useState<string | null>("mean");
+  const [inputData, setInputData] = useState<string[]>([]);
 
   const handleStatToggle = (statName: string) => {
     setSelectedStat(statName);
   };
 
-  const data = inputData.split(",").map((num) => parseFloat(num));
+  const openDrawer = () => {
+    drawerRef.current?.openDrawer();
+  };
+
+  const closeDrawer = () => {
+    drawerRef.current?.closeDrawer();
+  };
+
+  const data = inputData.map((number) => parseFloat(number));
+
+  const navigate = useNavigation<HomeNavigationProps["navigation"]>();
+
+  const goToHistory = () => {
+    navigate.navigate("History");
+  };
+
+  const renderButtons = () => {
+    return buttons.map((button) => (
+      <View key={button.value} style={styles.buttonSingleContainer}>
+        <Text style={{ fontWeight: "bold" }}>{button.label}</Text>
+        <ToggleButtonReusable
+          icon="check-circle"
+          value={button.value}
+          status={selectedStat === button.value ? "checked" : "unchecked"}
+          onPressButtonToggle={() => handleStatToggle(button.value)}
+        />
+      </View>
+    ));
+  };
+
+  const drawerView = (
+    <View style={styles.drawerContainer}>
+      {renderButtons()}
+      <TouchableOpacity style={styles.historyBtn} onPress={goToHistory}>
+        <Text style={{ fontWeight: "bold" }}>History</Text>
+      </TouchableOpacity>
+    </View>
+  );
 
   return (
-    <SafeAreaView style={styles.home}>
-      <Navbar />
-      <View style={styles.container}>
-        <View style={styles.buttonContainer}>
-          <View style={styles.buttonSingleContainer}>
-            <Text>Mean</Text>
-            <ToggleButtonReusable
-              icon="check-circle"
-              value="mean"
-              status={selectedStat === "mean" ? "checked" : "unchecked"}
-              onPressButtonToggle={() => handleStatToggle("mean")}
-            />
-          </View>
-          <View style={styles.buttonSingleContainer}>
-            <Text>Median</Text>
-            <ToggleButtonReusable
-              icon="check-circle"
-              value="median"
-              status={selectedStat === "median" ? "checked" : "unchecked"}
-              onPressButtonToggle={() => handleStatToggle("median")}
-            />
-          </View>
-          <View style={styles.buttonSingleContainer}>
-            <Text>Mode</Text>
-            <ToggleButtonReusable
-              icon="check-circle"
-              value="mode"
-              status={selectedStat === "mode" ? "checked" : "unchecked"}
-              onPressButtonToggle={() => handleStatToggle("mode")}
-            />
-          </View>
-          <View style={styles.buttonSingleContainer}>
-            <Text>Range</Text>
-            <ToggleButtonReusable
-              icon="check-circle"
-              value="range"
-              status={selectedStat === "range" ? "checked" : "unchecked"}
-              onPressButtonToggle={() => handleStatToggle("range")}
-            />
-          </View>
-          <View style={styles.buttonSingleContainer}>
-            <Text>Variance </Text>
-            <Text>Standard Deviation</Text>
-            <ToggleButtonReusable
-              icon="check-circle"
-              value="variance"
-              status={selectedStat === "variance" ? "checked" : "unchecked"}
-              onPressButtonToggle={() => handleStatToggle("variance")}
-            />
+    <SafeAreaView style={{ flex: 1 }}>
+      <DrawerLayoutAndroid
+        ref={drawerRef}
+        drawerWidth={200}
+        drawerPosition={"left"}
+        renderNavigationView={() => drawerView}
+      >
+        <Navbar toggleOpenClose={openDrawer} />
+        <View style={styles.container}>
+          <View style={styles.resultContainer}>
+            <NumberInput inputData={inputData} setInputData={setInputData} />
+            {selectedStat === "mean" && <MeanCalculator data={data} />}
+            {selectedStat === "median" && <MedianCalculator data={data} />}
+            {selectedStat === "mode" && <ModeCalculator data={data} />}
+            {selectedStat === "range" && <RangeCalculator data={data} />}
+            {selectedStat === "variance" && (
+              <VarianceAndStdDevCalculator data={data} />
+            )}
           </View>
         </View>
-        <View style={styles.resultContainer}>
-          <Text
-            style={{ margin: 0, padding: 0, width: "70%", flexWrap: "wrap" }}
-          >
-            Enter data separated by commas in the space provided:
-          </Text>
-          <TextInput
-            multiline={true}
-            numberOfLines={10}
-            mode="outlined"
-            label="Data"
-            placeholder="Enter data separated by commas"
-            onChangeText={setInputData}
-            value={inputData}
-            style={styles.textInput}
-          />
-
-          {selectedStat === "mean" && <MeanCalculator data={data} />}
-          {selectedStat === "median" && <MedianCalculator data={data} />}
-          {selectedStat === "mode" && <ModeCalculator data={data} />}
-          {selectedStat === "range" && <RangeCalculator data={data} />}
-          {selectedStat === "variance" && (
-            <VarianceAndStdDevCalculator data={data} />
-          )}
-        </View>
-      </View>
+      </DrawerLayoutAndroid>
     </SafeAreaView>
   );
 };
@@ -112,8 +111,10 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     flexDirection: "row",
+    justifyContent: "center",
     gap: 10,
   },
+
   buttonContainer: {
     width: "23%",
     height: "100%",
@@ -122,17 +123,36 @@ const styles = StyleSheet.create({
     elevation: 1,
     backgroundColor: "#e8e4c9",
   },
-  buttonSingleContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   resultContainer: {
-    width: "100%",
+    width: "90%",
     gap: 10,
     paddingTop: 10,
   },
   textInput: {
+    width: "90%",
+  },
+  buttonSingleContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  drawerContainer: {
+    flex: 1,
+    paddingTop: 30,
+    backgroundColor: "#fff",
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  drawerTitle: {
+    fontSize: 20,
+    marginBottom: 20,
+  },
+  historyBtn: {
     width: "70%",
+    paddingVertical: 10,
+    borderWidth: 2,
+    borderColor: "black",
+    borderRadius: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

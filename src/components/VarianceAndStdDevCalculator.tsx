@@ -20,17 +20,19 @@ const VarianceAndStdDevCalculator = ({
   return (
     <View style={styles.varianceNStdContainer}>
       <Text style={styles.resultContainer}>
-        Variance:{" "}
-        {Number.isNaN(variance)
+        <Text style={{ fontWeight: "bold" }}>
+          Variance and Standard Deviation:
+        </Text>
+        {Number.isNaN(variance) || Number.isNaN(stdDev)
           ? "Please enter the data in Input box to compute variance."
           : variance}
       </Text>
-      <Text style={styles.resultContainer}>
+      {/* <Text style={styles.resultContainer}>
         Standard Deviation:{" "}
-        {Number.isNaN(stdDev)
+        {
           ? "Please enter the data in Input box to compute standard deviation."
           : stdDev}
-      </Text>
+      </Text> */}
       <View style={styles.definition}>
         <Text style={styles.title}>Variance:</Text>
         <Text style={styles.definition}>
@@ -55,19 +57,22 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   resultContainer: {
-    width: "70%",
+    width: "100%",
+    fontSize: 16,
   },
   definition: {
-    width: "70%",
-    marginTop: 10,
+    width: "100%",
+    marginTop: 5,
     fontStyle: "italic",
+    fontSize: 15,
     color: "gray",
   },
   title: {
-    width: "70%",
-    marginTop: 10,
+    width: "100%",
+    marginTop: 5,
     fontStyle: "italic",
     color: "gray",
     fontWeight: "bold",
+    fontSize: 16,
   },
 });

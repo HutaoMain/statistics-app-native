@@ -16,7 +16,7 @@ const MedianCalculator = ({ data }: MedianCalculatorProps) => {
   return (
     <View>
       <Text style={styles.resultContainer}>
-        Median:{" "}
+        <Text style={{ fontWeight: "bold" }}>Median: </Text>
         {Number.isNaN(median)
           ? "Please enter the data in Input box to compute median."
           : median}
@@ -35,12 +35,14 @@ export default MedianCalculator;
 
 const styles = StyleSheet.create({
   resultContainer: {
-    width: "70%",
+    width: "100%",
+    fontSize: 16,
   },
   definition: {
-    width: "70%",
+    width: "100%",
     marginTop: 10,
     fontStyle: "italic",
     color: "gray",
+    fontSize: 15,
   },
 });

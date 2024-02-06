@@ -26,7 +26,8 @@ const ModeCalculator = ({ data }: ModeCalculatorProps) => {
   return (
     <View>
       <Text style={styles.resultContainer}>
-        Mode: {maxFrequency === 1 ? "No Mode" : modes.join(", ")}
+        <Text style={{ fontWeight: "bold" }}>Mode: </Text>
+        {maxFrequency === 1 ? "No Mode" : modes.join(", ")}
       </Text>
       <Text style={styles.definition}>
         The Mode is the value(s) that appear most frequently in the dataset. To
@@ -41,12 +42,14 @@ export default ModeCalculator;
 
 const styles = StyleSheet.create({
   resultContainer: {
-    width: "70%",
+    width: "100%",
+    fontSize: 16,
   },
   definition: {
-    width: "70%",
+    width: "100%",
     marginTop: 10,
     fontStyle: "italic",
     color: "gray",
+    fontSize: 15,
   },
 });
