@@ -11,15 +11,18 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import HorizontalLine from "./HorizontalLine";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppContext } from "../AppContext";
 
-interface Props {
-  setInputData: React.Dispatch<React.SetStateAction<string[]>>;
-  inputData: string[];
-}
+const NumberInput = () => {
+  const {
+    inputData,
+    setInputData,
+    enteredNumbers,
+    setEnteredNumbers,
+    clearData,
+  } = useAppContext();
 
-const NumberInput = ({ inputData, setInputData }: Props) => {
   const [enteredSingleNumber, setEnteredSingleNumber] = useState<string>("");
-  const [enteredNumbers, setEnteredNumbers] = useState<string[]>([]);
 
   const handleEnteredData = async () => {
     // Check if enteredSingleNumber is a valid number

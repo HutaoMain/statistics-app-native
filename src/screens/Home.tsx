@@ -17,6 +17,7 @@ import VarianceAndStdDevCalculator from "../components/VarianceAndStdDevCalculat
 import NumberInput from "../components/NumberInput";
 import { useNavigation } from "@react-navigation/native";
 import { HomeNavigationProps } from "../Types";
+import { AppProvider } from "../AppContext";
 
 const buttons = [
   { label: "Mean", value: "mean" },
@@ -38,10 +39,6 @@ const Home = () => {
 
   const openDrawer = () => {
     drawerRef.current?.openDrawer();
-  };
-
-  const closeDrawer = () => {
-    drawerRef.current?.closeDrawer();
   };
 
   const data = inputData.map((number) => parseFloat(number));
@@ -86,7 +83,7 @@ const Home = () => {
         <Navbar toggleOpenClose={openDrawer} />
         <View style={styles.container}>
           <View style={styles.resultContainer}>
-            <NumberInput inputData={inputData} setInputData={setInputData} />
+            <NumberInput />
             {selectedStat === "mean" && <MeanCalculator data={data} />}
             {selectedStat === "median" && <MedianCalculator data={data} />}
             {selectedStat === "mode" && <ModeCalculator data={data} />}

@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -6,45 +7,36 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
 import HorizontalLine from "../components/HorizontalLine";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppContext } from "../AppContext";
 
 const History = () => {
-  const [enteredNumbers, setEnteredNumbers] = useState<string[]>([]);
-  const [isRefresh, setIsRefresh] = useState<boolean>(false);
-
-  const refreshData = () => {
-    setIsRefresh(!isRefresh);
-  };
+  const { enteredNumbers, clearData, setEnteredNumbers } = useAppContext();
 
   useEffect(() => {
     const getData = async () => {
-      await AsyncStorage.getItem("numbers")
-        .then((value) => {
-          if (value !== null) {
-            // Convert the value to an array
-            const data = JSON.parse(value);
-            // Set the state with the data
-
-            console.log(data);
-
-            setEnteredNumbers(data);
-
-            console.log("Data retrieved successfully");
-          } else {
-            setEnteredNumbers([]);
-          }
-        })
-        .catch((error) => {
-          console.log("Error retrieving data", error);
-        });
+      try {
+        const value = await AsyncStorage.getItem("numbers");
+        if (value !== null) {
+          // Convert the value to an array
+          const data = JSON.parse(value);
+          // Set the state with the data
+          setEnteredNumbers(data);
+          console.log("Data retrieved successfully");
+        } else {
+          setEnteredNumbers([]);
+        }
+      } catch (error) {
+        console.log("Error retrieving data", error);
+      }
     };
     getData();
-  }, [isRefresh]);
+  }, [setEnteredNumbers]);
 
-  const clearEnteredData = () => {
-    AsyncStorage.removeItem("numbers");
+  const clearEnteredData = async () => {
+    await AsyncStorage.removeItem("numbers");
+    clearData();
   };
 
   return (
@@ -65,9 +57,6 @@ const History = () => {
           onPress={clearEnteredData}
         >
           <Text style={styles.clearDataBtnText}>Clear Data</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.refreshBtn} onPress={refreshData}>
-          <Text style={styles.refreshBtnText}>Refresh Data</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
