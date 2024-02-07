@@ -14,13 +14,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppContext } from "../AppContext";
 
 const NumberInput = () => {
-  const {
-    inputData,
-    setInputData,
-    enteredNumbers,
-    setEnteredNumbers,
-    clearData,
-  } = useAppContext();
+  const { inputData, setInputData, enteredNumbers, setEnteredNumbers } =
+    useAppContext();
 
   const [enteredSingleNumber, setEnteredSingleNumber] = useState<string>("");
 

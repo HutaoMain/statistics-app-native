@@ -17,7 +17,7 @@ import VarianceAndStdDevCalculator from "../components/VarianceAndStdDevCalculat
 import NumberInput from "../components/NumberInput";
 import { useNavigation } from "@react-navigation/native";
 import { HomeNavigationProps } from "../Types";
-import { AppProvider } from "../AppContext";
+import { AppProvider, useAppContext } from "../AppContext";
 
 const buttons = [
   { label: "Mean", value: "mean" },
@@ -31,7 +31,7 @@ const Home = () => {
   const drawerRef = useRef<DrawerLayoutAndroid>(null);
 
   const [selectedStat, setSelectedStat] = useState<string | null>("mean");
-  const [inputData, setInputData] = useState<string[]>([]);
+  const { inputData } = useAppContext();
 
   const handleStatToggle = (statName: string) => {
     setSelectedStat(statName);
